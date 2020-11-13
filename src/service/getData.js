@@ -8,8 +8,8 @@ async function getRandomPhoto() {
   return await res.json();
 }
 
-async function getPhotos(query) {
-  const url = `${_BASE_URL}/search/photos${_CLIENT_ID}&query=${query}&per_page=20`;
+async function getPhotos(query, page = 1) {
+  const url = `${_BASE_URL}/search/photos${_CLIENT_ID}&query=${query}&per_page=20&page=${page}`;
   const res = await fetch(url);
   return await res.json();
 }

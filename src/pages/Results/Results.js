@@ -3,35 +3,64 @@ import "./results.css";
 
 import { useLocation, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
+import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { getPhotos } from "../../service/getData";
 import { exttractImgs } from "../../service/utils";
+import { UnsplashImg } from "../../components/UnsplashImg/UnsplashImg";
+import { Loader } from "../../components/Loader/Loader";
+
+const WrapperImages = styled.section`
+  max-width: 70rem;
+  margin: 4rem auto;
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 300px;
+`;
 
 export function Results() {
   const location = useLocation();
   const history = useHistory();
   const query = location.query;
   const [value, setValue] = useState(query);
+  const [unsplashPhotos, setUnsplashPhotos] = useState([]);
+  const [hasMoreItem, setHasMoreItem] = useState(true);
+  const [page, setPage] = useState(1);
 
   if (!query) {
     history.push("/");
   }
 
   useEffect(() => {
-    console.log(query);
     getPhotos(query).then((data) => {
-      console.log(data);
       const photos = data.results.map((item) => {
         return exttractImgs(item);
       });
-      console.log(photos);
+      setUnsplashPhotos(photos);
+      setHasMoreItem(true);
     });
   }, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     console.log("form submit");
+  };
+
+  const fetchPhotos = () => {
+    setPage(page + 1);
+    getPhotos(query, page + 1).then((data) => {
+      if (data.results) {
+        console.log(data);
+        const photos = data.results.map((item) => {
+          return exttractImgs(item);
+        });
+        setUnsplashPhotos([...unsplashPhotos, ...photos]);
+      } else {
+        setHasMoreItem(false);
+      }
+    });
   };
 
   return (
@@ -72,7 +101,27 @@ export function Results() {
           <span className="similar-query">USA</span>
         </div>
 
-        {/* <InfiniteScroll></InfiniteScroll> */}
+        {unsplashPhotos ? (
+          <InfiniteScroll
+            dataLength={unsplashPhotos.length}
+            next={fetchPhotos}
+            hasMore={hasMoreItem}
+            loader={<Loader />}
+            endMessage={
+              <p className="text-center">
+                <b>No more results.</b>
+              </p>
+            }
+          >
+            <WrapperImages>
+              {unsplashPhotos.map((img) => {
+                return <UnsplashImg key={img.id} img={img} />;
+              })}
+            </WrapperImages>
+          </InfiniteScroll>
+        ) : (
+          <Loader />
+        )}
       </Container>
     </div>
   );
