@@ -44,6 +44,7 @@
 .similar-queries {
   display: flex;
   flex-direction: row;
+  margin-bottom: 50px;
 }
 
 .similar-query {

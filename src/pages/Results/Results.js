@@ -3,6 +3,10 @@ import "./results.css";
 
 import { useLocation, useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+import { getPhotos } from "../../service/getData";
+import { exttractImgs } from "../../service/utils";
 
 export function Results() {
   const location = useLocation();
@@ -13,6 +17,17 @@ export function Results() {
   if (!query) {
     history.push("/");
   }
+
+  useEffect(() => {
+    console.log(query);
+    getPhotos(query).then((data) => {
+      console.log(data);
+      const photos = data.results.map((item) => {
+        return exttractImgs(item);
+      });
+      console.log(photos);
+    });
+  }, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -56,6 +71,8 @@ export function Results() {
           <span className="similar-query">Island</span>
           <span className="similar-query">USA</span>
         </div>
+
+        {/* <InfiniteScroll></InfiniteScroll> */}
       </Container>
     </div>
   );
