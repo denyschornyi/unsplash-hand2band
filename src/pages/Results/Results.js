@@ -50,6 +50,12 @@ export function Results() {
             />
           </form>
         </div>
+
+        <div className="similar-queries">
+          <span className="similar-query">Beach</span>
+          <span className="similar-query">Island</span>
+          <span className="similar-query">USA</span>
+        </div>
       </Container>
     </div>
   );

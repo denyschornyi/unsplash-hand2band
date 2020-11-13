@@ -1,5 +1,6 @@
 .results-header {
   padding-top: 50px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
 }
@@ -38,4 +39,30 @@
   outline: none;
   border: none;
   background-color: #f5f5f5;
+}
+
+.similar-queries {
+  display: flex;
+  flex-direction: row;
+}
+
+.similar-query {
+  display: block;
+  cursor: pointer;
+  margin-left: 4px;
+  margin-right: 4px;
+  min-width: 145px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #767676;
+  border: 1px solid #767676;
+  border-radius: 4px;
+  padding: 13px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.similar-query:hover {
+  color: black;
+  border: 1px solid black;
 }
