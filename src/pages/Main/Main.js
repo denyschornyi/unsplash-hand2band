@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./main.css";
 
+import { useHistory } from "react-router-dom";
 import { Container } from "reactstrap";
 
 import { getRandomPhoto } from "../../service/getData";
@@ -8,6 +9,7 @@ import { getRandomPhoto } from "../../service/getData";
 export function Main() {
   const [randomPhoto, setRandomPhoto] = useState("");
   const [query, setQuery] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     // getRandomPhoto().then((img) => {
@@ -27,7 +29,7 @@ export function Main() {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
+    history.push({ pathname: "/results", query });
   };
   return (
     <div className="main ">
