@@ -31,6 +31,11 @@ export function Main() {
     e.preventDefault();
     history.push({ pathname: "/results", query });
   };
+
+  const onTrendingSubmit = (query) => {
+    history.push({ pathname: "/results", query });
+  };
+
   return (
     <div className="main ">
       {randomPhotoElement}
@@ -73,6 +78,33 @@ export function Main() {
                 </div>
               </form>
             </div>
+            <p>
+              Trending:{" "}
+              <span
+                className="trending-search"
+                onClick={() => onTrendingSubmit("flowers")}
+              >
+                flowers, &nbsp;
+              </span>
+              <span
+                className="trending-search"
+                onClick={() => onTrendingSubmit("wallpapers")}
+              >
+                wallpapers, &nbsp;
+              </span>
+              <span
+                className="trending-search"
+                onClick={() => onTrendingSubmit("happy")}
+              >
+                happy, &nbsp;
+              </span>
+              <span
+                className="trending-search"
+                onClick={() => onTrendingSubmit("love")}
+              >
+                love
+              </span>
+            </p>
           </div>
         </Container>
       </div>
