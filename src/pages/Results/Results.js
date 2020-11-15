@@ -33,7 +33,7 @@ export function Results() {
     history.push("/");
   }
 
-  useEffect(() => {
+  const getData = (query) => {
     getPhotos(query).then((data) => {
       const photos = data.results.map((item) => {
         return exttractImgs(item);
@@ -41,18 +41,25 @@ export function Results() {
       setUnsplashPhotos(photos);
       setHasMoreItem(true);
     });
+  };
+
+  useEffect(() => {
+    getData(query);
   }, []);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    console.log("form submit");
+    setUnsplashPhotos([]);
+    console.log(unsplashPhotos);
+    console.log(value);
+    getData(value);
   };
 
   const fetchPhotos = () => {
     setPage(page + 1);
-    getPhotos(query, page + 1).then((data) => {
+    getPhotos(value, page + 1).then((data) => {
       if (data.results) {
-        console.log(data);
+        console.log(data.results);
         const photos = data.results.map((item) => {
           return exttractImgs(item);
         });
@@ -61,6 +68,7 @@ export function Results() {
         setHasMoreItem(false);
       }
     });
+    console.log(unsplashPhotos);
   };
 
   return (
